@@ -206,8 +206,10 @@ public class FileBrowser extends Dialog {
                 File selectedFile = null;
 
                 selectedFile = getSelectedFileByName(textView.getText().toString());
+                if (selectedFile == null)
+                    return ;
                 if (selectedFile.isDirectory()) {
-                    if (selectedFile.list().length == 0) {
+                    if (selectedFile.list() == null || selectedFile.list().length == 0) {
                         Toast.makeText(mContext, R.string.directory_empty, Toast.LENGTH_LONG).show();
                         return;
                     }

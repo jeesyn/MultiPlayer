@@ -281,7 +281,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     @Override
     public void onBackPressed() {
-        if (topSurfaceView.getVisibility() == View.VISIBLE) {
+        if (topSurfaceView != null || topSurfaceView.getVisibility() == View.VISIBLE) {
             List<Player> playerList = playerManager.getPlayerList();
             Player tmpPlayer = playerList.get(currentIndex);
             if (tmpPlayer != null) {

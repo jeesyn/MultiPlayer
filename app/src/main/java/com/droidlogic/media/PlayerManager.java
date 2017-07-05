@@ -37,7 +37,7 @@ public class PlayerManager {
     }
 
     public Player getPlayer(int index) {
-        if (index >= playerList.size()) {
+        if (index < 0 || index >= playerList.size()) {
             return null;
         }
         return playerList.get(index);

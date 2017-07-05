@@ -230,6 +230,8 @@ public class MediaControlAgent implements View.OnClickListener,
     public void onClick(View v) {
         startControlerTimeout();
         Player player = playerManager.getPlayer(currentPlayerIndex);
+        if (player == null)
+            return ;
         switch (v.getId()) {
             case R.id.playBtn:
                 player.play();
