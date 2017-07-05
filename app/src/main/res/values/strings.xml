@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MultiPlayer</string>
+    <string name="filebrowser_title">Please select the file</string>
+    <string name="sdcard_device_str">Local Disk</string>
+    <string name="max_file_num_tip">You can add atmost %1$d files</string>
+    <string name="video_index_label">Index:%1$d</string>
+    <string name="support_media_str">.ts,.mp4,.avi</string>
+    <string name="directory_empty">This direcory is empty</string>
+    <string name="sel_file_empty">Empty selected!</string>
+    <string name="sel_empty_alert">Selected files can not be empty!</string>
+</resources>
