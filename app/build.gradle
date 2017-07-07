@@ -13,6 +13,12 @@ android {
     }
 
     signingConfigs {
+        debug {
+            storeFile file("../..//WorkDocument/mykey.keystore")
+            storePassword "as911299"
+            keyAlias "platform"
+            keyPassword "as911299"
+        }
     }
 
     buildTypes {

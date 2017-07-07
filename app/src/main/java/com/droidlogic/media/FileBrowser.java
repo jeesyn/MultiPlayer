@@ -203,6 +203,8 @@ public class FileBrowser extends Dialog {
 //                item.setBackgroundColor(0x800000ff);
                 TextView textView = (TextView) item
                         .findViewById(R.id.browserFileName);
+                if (textView == null)
+                    return ;
                 File selectedFile = null;
 
                 selectedFile = getSelectedFileByName(textView.getText().toString());
@@ -265,6 +267,8 @@ public class FileBrowser extends Dialog {
             }
         } else if (currentPathString != null) {
             File[] files = new File(currentPathString).listFiles();
+            if (files == null)
+                return ret;
             for (int i = 0; i < files.length; i++) {
                 ret.add(files[i].getName());
             }
