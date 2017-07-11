@@ -169,24 +169,6 @@ public class FileBrowser extends Dialog {
         parentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (currentPathString == null)
-//                    return;
-//                if (mFirstDirsMap.containsValue(currentPathString)) {
-//                    currentPathString = ROOT_PATH;
-//                    pathEdit.setText(currentPathString);
-//                    fileBrowserAdapter = new FileBrowserAdapter(mContext, currentPathString, getInitData());
-//                    fileListView.setAdapter(fileBrowserAdapter);
-//                    return;
-//                }
-//                File current = new File(currentPathString);
-//                File parent = current.getParentFile();
-//                if (current.isFile()) {
-//                    currentPathString = parent.getAbsolutePath();
-//                    pathEdit.setText(currentPathString);
-//                } else if (parent != null) {
-//                    // if (!(parent.equals(Environment.getRootDirectory()))) {
-//                    browseDirectory(parent.getAbsolutePath());
-//                }
                 goUpDir();
             }
         });
