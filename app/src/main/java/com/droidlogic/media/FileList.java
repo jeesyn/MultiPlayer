@@ -1,6 +1,7 @@
 package com.droidlogic.media;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class FileList {
 
+    private static String TAG = "FileList";
     private final Context mContext;
     private String mInitDir;
     private List<String> mMediaFiles;
@@ -34,6 +36,8 @@ public class FileList {
         for (int i = 0; i < length; i++) {
             mMediaFiles.add(fileArray[i].getAbsolutePath());
         }
+        if (mMediaFiles.size() == 0)
+            Log.d(TAG, "initData: no supported media file added.");
     }
 
     public String getCurFilePath() {
@@ -51,6 +55,8 @@ public class FileList {
 
     public String prevPath() {
         int curIndex = getIndex(curFilePath);
+        if (mMediaFiles.size() == 0)
+            return null;
         if (curIndex == 0) {
             curIndex = mMediaFiles.size() - 1;
         } else {
@@ -63,6 +69,8 @@ public class FileList {
     public String nextPath() {
         int curIndex = getIndex(curFilePath);
         int size = mMediaFiles.size();
+        if (size == 0)
+            return null;
         if (curIndex == size - 1 || size == 1) {
             curIndex = 0;
         } else {

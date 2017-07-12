@@ -283,10 +283,13 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     public void onBackPressed() {
         if (topSurfaceView != null || topSurfaceView.getVisibility() == View.VISIBLE) {
             List<Player> playerList = playerManager.getPlayerList();
+            if (currentIndex != -1)
+                currentIndex = 0;
             Player tmpPlayer = playerList.get(currentIndex);
             if (tmpPlayer != null) {
                 tmpPlayer.pause();
             }
+
             videoGridView.setVisibility(View.VISIBLE);
             topSurfaceView.setVisibility(View.INVISIBLE);
             for (int i = 0; i < playerList.size(); i++) {
