@@ -29,7 +29,6 @@ public class Player extends Thread {
     private MediaPlayer mPlayer;
     private SurfaceHolder holder;
     private Handler mHandler;
-    private boolean isPrepared = false;
     private boolean isPaused = false;
     private boolean mIsRepeat;
     private boolean isCompleted = false;
@@ -107,7 +106,7 @@ public class Player extends Thread {
             uri = newUri;
 //            Message msg = mHandler.obtainMessage(MSG_CMD_INIT, index);
 //            msg.sendToTarget();
-            reStartPlayer();
+            restartPlayer();
         }
     }
 
@@ -119,7 +118,7 @@ public class Player extends Thread {
             uri = newUri;
 //            Message msg = mHandler.obtainMessage(MSG_CMD_INIT, index);
 //            msg.sendToTarget();
-            reStartPlayer();
+            restartPlayer();
         }
     }
 
@@ -170,7 +169,7 @@ public class Player extends Thread {
         }
     }
 
-    private void reStartPlayer() {
+    private void restartPlayer() {
         try {
 //            mPlayer= new MediaPlayer();
             mPlayer.reset();
@@ -182,7 +181,6 @@ public class Player extends Thread {
             mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    isPrepared = true;
                     mPlayer.start();
                 }
             });
