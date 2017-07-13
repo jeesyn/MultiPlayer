@@ -55,7 +55,7 @@ public class FileList {
 
     public String prevPath() {
         int curIndex = getIndex(curFilePath);
-        if (mMediaFiles.size() == 0)
+        if (mMediaFiles.size() == 0) //return null if no file supported
             return null;
         if (curIndex == 0) {
             curIndex = mMediaFiles.size() - 1;
@@ -72,7 +72,7 @@ public class FileList {
         if (size == 0)
             return null;
         if (curIndex == size - 1 || size == 1) {
-            curIndex = 0;
+            curIndex = 0;s
         } else {
             curIndex = curIndex + 1;
         }
