@@ -72,7 +72,7 @@ public class FileList {
         if (size == 0)
             return null;
         if (curIndex == size - 1 || size == 1) {
-            curIndex = 0;s
+            curIndex = 0;
         } else {
             curIndex = curIndex + 1;
         }

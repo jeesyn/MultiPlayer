@@ -48,6 +48,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     private SurfaceView topSurfaceView;
     private SurfaceHolder topSurfaceHolder;
     private  int currentIndex = -1;
+    private boolean fullScreenOn = false;
 
 
     @Override
@@ -100,7 +101,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             mSurfaceViews[i] = surface;
             mSurfaceHolders[i] = surface.getHolder();
             mSurfaceHolders[i].addCallback(this);
-            mSurfaceHolders[i].setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+           // mSurfaceHolders[i].setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         }
         mVideosAdapter = new VideosAdapter(this, checkedList, mSurfaceContainers);
         videoGridView.setAdapter(mVideosAdapter);
@@ -116,7 +117,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         topSurfaceView = (SurfaceView)findViewById(R.id.topSurface);
         topSurfaceHolder = topSurfaceView.getHolder();
         topSurfaceHolder.addCallback(this);
-        topSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+       // topSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         topSurfaceView.setZOrderOnTop(true);
         topSurfaceView.setOnClickListener(this);
     }
@@ -274,6 +275,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         if (fullPlayer != null) {
             videoGridView.setVisibility(View.INVISIBLE);
             topSurfaceView.setVisibility(View.VISIBLE);
+            fullScreenOn = true;
         }
 
         //fullScreenAtOtherActivity(index);
@@ -281,29 +283,39 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     @Override
     public void onBackPressed() {
-        if (topSurfaceView != null || topSurfaceView.getVisibility() == View.VISIBLE) {
-            List<Player> playerList = playerManager.getPlayerList();
-            if (currentIndex != -1)
-                currentIndex = 0;
-            Player tmpPlayer = playerList.get(currentIndex);
-            if (tmpPlayer != null) {
-                tmpPlayer.pause();
-            }
+        List<Player> playerList = playerManager.getPlayerList();
+        if (fullScreenOn) { //back from fullscreen
+            if (topSurfaceView != null || topSurfaceView.getVisibility() == View.VISIBLE) {
 
-            videoGridView.setVisibility(View.VISIBLE);
-            topSurfaceView.setVisibility(View.INVISIBLE);
-            for (int i = 0; i < playerList.size(); i++) {
-                Player player = playerList.get(i);
-                if (player != null) {
-                    if (player.paused()) {
-                        if (i == currentIndex) {
-                            player.setDisplay(mSurfaceHolders[i]);
+                if (currentIndex == -1)
+                    currentIndex = 0;
+                Player tmpPlayer = playerList.get(currentIndex);
+                if (tmpPlayer != null) {
+                    tmpPlayer.pause();
+                }
+
+                videoGridView.setVisibility(View.VISIBLE);
+                topSurfaceView.setVisibility(View.INVISIBLE);
+                for (int i = 0; i < playerList.size(); i++) {
+                    Player player = playerList.get(i);
+                    if (player != null) {
+                        if (player.paused()) {
+                            if (i == currentIndex) {
+                                player.setDisplay(mSurfaceHolders[i]);
+                            }
+                            player.play();
                         }
-                        player.play();
                     }
                 }
+                fullScreenOn = false;
+                return;
             }
-            return;
+        }
+        else {
+            for (Player player : playerList){
+                player.stopPlay();
+            }
+            //exit PlayerActivity
         }
         super.onBackPressed();
     }
