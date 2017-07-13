@@ -13,15 +13,15 @@
         android:layout_gravity="center" />
 
     <GridView
-        android:id="@+id/videoGridView"
+        android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="3" />
+        android:layout_height="match_parent" />
+
     <SurfaceView
         android:id="@+id/topSurface"
         android:layout_gravity="center"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </FrameLayout>

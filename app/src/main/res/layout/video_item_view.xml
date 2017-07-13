@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:padding="10dp">
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="50dip"
         android:layout_height="50dip"
         android:visibility="gone" />
+
     <SurfaceView
-        android:id="@+id/surfaceView"
+        android:id="@+id/comm_surface_view"
         android:layout_width="wrap_content"
         android:layout_height="170dip"
-        android:background="#55FFCCFF"/>
-</LinearLayout>
+        android:background="#55FFCCFF" />
+
+    <SurfaceView
+        android:id="@+id/video_1_surface_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <SurfaceView
+        android:id="@+id/video_2_surface_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_widthPercent="45%"
+        app:layout_heightPercent="100%" />
+
+    <SurfaceView
+        android:id="@+id/video_4_surface_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_widthPercent="45%"
+        app:layout_heightPercent="45%" />
+</android.support.percent.PercentRelativeLayout>
