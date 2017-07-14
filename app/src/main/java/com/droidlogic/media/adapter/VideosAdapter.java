@@ -1,12 +1,15 @@
 package com.droidlogic.media.adapter;
 
 import android.content.Context;
+import android.support.percent.PercentRelativeLayout;
+import android.text.Layout;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.List;
 
@@ -19,10 +22,10 @@ public class VideosAdapter extends BaseAdapter {
     private Context mContext;
 //    private LogicSurfaceView[] mSurfaceViews;
     private SurfaceView[] mSurfaceViews;
-    private LinearLayout[] mSurfaceContainers;
+    private PercentRelativeLayout[] mSurfaceContainers;
     private List<String>checkedPaths;
 
-    public VideosAdapter(Context context, List<String> checkedPaths, LinearLayout[] containers) {
+    public VideosAdapter(Context context, List<String> checkedPaths, PercentRelativeLayout[] containers) {
         mContext = context;
         this.checkedPaths = checkedPaths;
         mSurfaceContainers = containers;

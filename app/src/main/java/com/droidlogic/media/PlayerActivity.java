@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.percent.PercentRelativeLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 
 import com.droidlogic.media.adapter.VideosAdapter;
 
@@ -31,10 +31,9 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     private static final String KEY_CHECKED_LIST = "checked_list";
 //    private PlayerFragmentCallback mCallback = null;
     private List<String> checkedList;
-    private GridView videoView;
+    private GridView videosView;
 //    private LogicSurfaceView[] mSurfaceViews;
-    private SurfaceView[] mSurfaceViews;
-    private LinearLayout [] mSurfaceContainers;
+    private PercentRelativeLayout[] mSurfaceContainer;
     private SurfaceHolder[] mSurfaceHolders;
     private Player[] mPlayers;
     private VideosAdapter mVideosAdapter;
@@ -43,7 +42,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     private SurfaceView topSurfaceView;
     private SurfaceHolder topSurfaceHolder;
     private  int currentIndex = -1;
-    private boolean fullScreenOn = false;
+    private boolean fullScreenFlag = false;
 
 
     @Override
@@ -51,7 +50,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        setContentView(R.layout.layout_multi_player);
         Intent intent = getIntent();
         checkedList = (List<String>)intent.getSerializableExtra(KEY_CHECKED_LIST);
         setContentView(R.layout.layout_multi_player);
@@ -67,48 +65,61 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         registerReceiver(mInfoReceiver, iF);
     }
 
-    private int getAutoSizeSurfaceView( int size) {
-        int id = 0;
-        int[] surfaceViewList ={
-            R.id.video_1_surface_view, R.id.video_2_surface_view,
-                    R.id.video_4_surface_view, R.id.video_4_surface_view
+    private int getAutoSizedSurfacLayout( int size) {
+        int layout = 0;
+        int[] surfaceLayoutList ={
+            R.layout.video_item_view, R.layout.video_item_view_1,
+                R.layout.video_item_view_2, R.layout.video_item_view_4,
         };
-        if (size <= 4) {
-            id = surfaceViewList[size];
-        } else {
-            id = R.id.comm_surface_view;
+        if (size < 4) {
+            layout = surfaceLayoutList[size];
         }
-        return id;
+        else if (size == 4) {
+            layout = surfaceLayoutList[size - 1];
+        }
+            else
+        {
+            layout = surfaceLayoutList[0];
+        }
+        return layout;
+    }
+
+    private int getAutoSizedNumColumn(int size) {
+        if (size <= 2)
+            return size;
+        else if (size > 2 && size <=4)
+            return 2;
+        else
+            return 3;
     }
 
     private void initPlayerViews() {
         if (checkedList.size() == 0) {
             return;
         }
-        mSurfaceViews = new SurfaceView[checkedList.size()];
-        videoView = (GridView) findViewById(R.id.videoView);
-        mSurfaceContainers = new LinearLayout[checkedList.size()];
+
+        videosView = (GridView) findViewById(R.id.videosView);
         mSurfaceHolders = new SurfaceHolder[checkedList.size()];
+        mSurfaceContainer = new PercentRelativeLayout[checkedList.size()];
         LayoutInflater inflater = LayoutInflater.from(this);
 
+
         for (int i = 0; i < checkedList.size(); i++) {
-            mSurfaceContainers[i] =
-                    (LinearLayout) inflater.inflate(R.layout.video_item_view, null);
-            SurfaceView surface =
-                    (SurfaceView) (mSurfaceContainers[i].
-                            findViewById(getAutoSizeSurfaceView(checkedList.size())));
-            mSurfaceViews[i] = surface;
+            mSurfaceContainer[i] = (PercentRelativeLayout)
+                    inflater.inflate(getAutoSizedSurfacLayout(checkedList.size()), null);
+            SurfaceView surface =(SurfaceView) (
+                            mSurfaceContainer[i].findViewById(R.id.surface_view));
             mSurfaceHolders[i] = surface.getHolder();
             mSurfaceHolders[i].addCallback(this);
-           // mSurfaceHolders[i].setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         }
 
-        mVideosAdapter = new VideosAdapter(this, checkedList, mSurfaceContainers);
-        videoView.setAdapter(mVideosAdapter);
-        videoView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mVideosAdapter = new VideosAdapter(this, checkedList, mSurfaceContainer);
+        videosView.setNumColumns(getAutoSizedNumColumn(checkedList.size()));
+        videosView.setAdapter(mVideosAdapter);
+        videosView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "Now videoView onItemClick, position:" + position);
+                Log.d(TAG, "Now videosView onItemClick, position:" + position);
                 currentIndex = position;
                 mediaControlAgent.showController(position, true, true);
             }
@@ -242,15 +253,11 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     private void pauseAllPlayers() {
         List<Player> playerList = playerManager.getPlayerList();
-        for (int i = 0; i < playerList.size(); i++) {
-            Player player = playerList.get(i);
+        if (playerList == null)
+            return ;
+        for (Player player : playerList) {
             if (player != null) {
-//                if (i != index) {
-//                    player.stopPlay();
-//                } else {
-//                    fullPlayer = player;
-                    player.pause();
-
+                player.pause();
             }
         }
     }
@@ -273,9 +280,9 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             }
         }
         if (fullPlayer != null) {
-            videoView.setVisibility(View.INVISIBLE);
+            videosView.setVisibility(View.INVISIBLE);
             topSurfaceView.setVisibility(View.VISIBLE);
-            fullScreenOn = true;
+            fullScreenFlag = true;
         }
 
         //fullScreenAtOtherActivity(index);
@@ -284,7 +291,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     @Override
     public void onBackPressed() {
         List<Player> playerList = playerManager.getPlayerList();
-        if (fullScreenOn) { //back from fullscreen
+        if (fullScreenFlag) { //back from fullscreen
             if (topSurfaceView != null || topSurfaceView.getVisibility() == View.VISIBLE) {
 
                 if (currentIndex == -1)
@@ -294,7 +301,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
                     tmpPlayer.pause();
                 }
 
-                videoView.setVisibility(View.VISIBLE);
+                videosView.setVisibility(View.VISIBLE);
                 topSurfaceView.setVisibility(View.INVISIBLE);
                 for (int i = 0; i < playerList.size(); i++) {
                     Player player = playerList.get(i);
@@ -307,7 +314,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
                         }
                     }
                 }
-                fullScreenOn = false;
+                fullScreenFlag = false;
                 return;
             }
         }
