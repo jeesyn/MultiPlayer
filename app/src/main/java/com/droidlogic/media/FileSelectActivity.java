@@ -32,7 +32,7 @@ public class FileSelectActivity extends Activity implements  View.OnClickListene
     private Fragment currentFragment = null;
     private static final  String TAG = "FileSelectActivity";
     private static final String KEY_CHECKED_LIST = "checked_list";
-    private static final int MAX_FILE_NUM = 10;
+    private static final int MAX_FILE_NUM = 12;
     private FileBrowser fileBrowser;
     private List<String> selectedList = new ArrayList<String>();
     private ListView mFileListView;
@@ -120,6 +120,7 @@ public class FileSelectActivity extends Activity implements  View.OnClickListene
             case R.id.ensureBtn:
                 if (getCheckedItemList().size() == 0) {
                     Toast.makeText(this, R.string.sel_empty_alert, Toast.LENGTH_LONG).show();
+                    break;
                 }
                 Intent intent = new Intent(this, PlayerActivity.class);
                 intent.putExtra(KEY_CHECKED_LIST, (Serializable)getCheckedItemList());

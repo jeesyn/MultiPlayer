@@ -67,20 +67,13 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     private int getAutoSizedSurfacLayout( int size) {
         int layout = 0;
-        int[] surfaceLayoutList ={
-            R.layout.video_item_view, R.layout.video_item_view_1,
-                R.layout.video_item_view_2, R.layout.video_item_view_4,
-        };
-        if (size < 4) {
-            layout = surfaceLayoutList[size];
+        if (size <= 2) {
+            layout =  R.layout.video_item_view_1_2;
         }
-        else if (size == 4) {
-            layout = surfaceLayoutList[size - 1];
+        else if (size >=3 &&size <=6) {
+            layout = R.layout.video_item_view_3_6;
         }
-            else
-        {
-            layout = surfaceLayoutList[0];
-        }
+
         return layout;
     }
 
@@ -89,8 +82,12 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             return size;
         else if (size > 2 && size <=4)
             return 2;
-        else
+        else if(size > 4 && size <= 12)
             return 3;
+        else if(size >12 && size <=16)
+            return 4;
+        else
+            return 5;
     }
 
     private void initPlayerViews() {
@@ -148,7 +145,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     protected void onStop() {
         Log.d(TAG, "Now onStop!");
         super.onStop();
-        mediaControlAgent.stop();
     }
 
     private void clean() {
@@ -160,6 +156,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         Log.d(TAG, "Now enter onDestroy!");
         unregisterReceiver(mInfoReceiver);
         playerManager.clear();
+        mediaControlAgent.stop();
         clean();
         super.onDestroy();
     }
@@ -193,7 +190,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
                 + height);
 
         int index = indexOf(holder);
-        Player player = null;
+        Player player;
         if (index >= 0) {
              player = playerManager.getPlayer(index);
             if (player != null && !player.isAlive()) {
@@ -320,7 +317,9 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         }
         else {
             for (Player player : playerList){
-                player.stopPlay();
+                if (player != null) {
+                    player.stopPlay();
+                }
             }
             //exit PlayerActivity
         }
@@ -341,6 +340,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d(TAG, "onKeyDown: keyCode=" + keyCode + "event" + event);
         if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER) {
             mediaControlAgent.showController(currentIndex, true, false);
             return true;
