@@ -62,6 +62,7 @@ public class PlayerManager {
     public void clear()  {
         for (int i = 0; i <  playerList.size(); i++) {
             getPlayer(i).interrupt();
+            getPlayer(i).release();
 //            getPlayer(i).join();
 
         }

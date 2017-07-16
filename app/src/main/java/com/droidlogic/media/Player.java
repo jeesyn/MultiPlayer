@@ -144,7 +144,7 @@ public class Player extends Thread {
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setDataSource(uri);
             mPlayer.setDisplay(holder);
-            mPlayer.prepare();
+            mPlayer.prepareAsync();
             mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
@@ -165,7 +165,13 @@ public class Player extends Thread {
             });
 
         } catch(Exception e) {
-            e.printStackTrace();
+            if (e instanceof IOExecption || e instanceof IllegalArgumentException) {
+                Log.d(TAG, "Failed to get resource of URI/URL");
+            } else if (e instanceof InterruptedException) {
+                Log.d(TAG, "Failed to sleep.");
+            } else {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -176,7 +182,7 @@ public class Player extends Thread {
 //            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setDataSource(uri);
 //            mPlayer.setDisplay(holder);
-            mPlayer.prepare();
+            mPlayer.prepareAsync();
             isCompleted = false;
             mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
@@ -186,7 +192,11 @@ public class Player extends Thread {
             });
             mPlayer.start();
         } catch(Exception e) {
-            e.printStackTrace();
+            if (e instanceof IOExecption || e instanceof IllegalArgumentException) {
+                Log.d(TAG, "Failed to get resource of URI/URL");
+            } else {
+                e.printStackTrace();
+            }
         }
     }
 

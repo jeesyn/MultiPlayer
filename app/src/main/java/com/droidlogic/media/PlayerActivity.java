@@ -134,6 +134,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     @Override
     protected void onStart() {
         super.onStart();
+        playerManager = PlayerManager.getInstance(this);
     }
 
     @Override
@@ -144,7 +145,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     @Override
     protected void onStop() {
         Log.d(TAG, "Now onStop!");
-        super.onStop();
+        supe.onStop();
+        playerManager.clear();
     }
 
     private void clean() {
@@ -155,7 +157,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     protected void onDestroy() {
         Log.d(TAG, "Now enter onDestroy!");
         unregisterReceiver(mInfoReceiver);
-        playerManager.clear();
         mediaControlAgent.stop();
         clean();
         super.onDestroy();
