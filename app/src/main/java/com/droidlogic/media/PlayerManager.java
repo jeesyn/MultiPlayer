@@ -59,6 +59,13 @@ public class PlayerManager {
         return playerList.size() -1;
     }
 
+    public int delPlayer(Player player) {
+        if (hasPlayer(player)) {
+            playerList.remove(player);
+        }
+        return playerList.size() - 1;
+    }
+
     public void clear()  {
         for (int i = 0; i <  playerList.size(); i++) {
             getPlayer(i).interrupt();

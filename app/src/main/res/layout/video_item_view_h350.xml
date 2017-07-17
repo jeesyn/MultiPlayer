@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="5dip">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:visibility="gone" />
+
+    <SurfaceView
+        android:id="@+id/surface_view"
+        android:layout_width="match_parent"
+        android:layout_height="350dip"
+        android:background="#55faffcc" />
+
+</android.support.percent.PercentRelativeLayout>

@@ -32,10 +32,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 //    private PlayerFragmentCallback mCallback = null;
     private List<String> checkedList;
     private GridView videosView;
-//    private LogicSurfaceView[] mSurfaceViews;
     private PercentRelativeLayout[] mSurfaceContainer;
     private SurfaceHolder[] mSurfaceHolders;
-    private Player[] mPlayers;
     private VideosAdapter mVideosAdapter;
     private MediaControlAgent mediaControlAgent;
     private PlayerManager playerManager;
@@ -65,15 +63,23 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         registerReceiver(mInfoReceiver, iF);
     }
 
-    private int getAutoSizedSurfacLayout( int size) {
+    private int getAutoHeightSurfaceLayout( int size) {
         int layout = 0;
         if (size <= 2) {
-            layout =  R.layout.video_item_view_1_2;
+            layout =  R.layout.video_item_view_h710;
         }
         else if (size >=3 &&size <=6) {
-            layout = R.layout.video_item_view_3_6;
+            layout = R.layout.video_item_view_h350;
         }
-
+        else if (size >= 7 && size <= 9) {
+            layout = R.layout.video_item_view_h230;
+        }
+        else if (size >= 10 && size <= 16) {
+            layout = R.layout.video_item_view_h170;
+        }
+        else if (size >= 17) {
+            layout = R.layout.video_item_view_h130;
+        }
         return layout;
     }
 
@@ -82,9 +88,9 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             return size;
         else if (size > 2 && size <=4)
             return 2;
-        else if(size > 4 && size <= 12)
+        else if(size > 4 && size <= 16)
             return 3;
-        else if(size >12 && size <=16)
+        else if(size >16 && size <= 20)
             return 4;
         else
             return 5;
@@ -100,10 +106,10 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         mSurfaceContainer = new PercentRelativeLayout[checkedList.size()];
         LayoutInflater inflater = LayoutInflater.from(this);
 
-
+        int autoHeightSurfaceLayout = getAutoHeightSurfaceLayout(checkedList.size());
         for (int i = 0; i < checkedList.size(); i++) {
             mSurfaceContainer[i] = (PercentRelativeLayout)
-                    inflater.inflate(getAutoSizedSurfacLayout(checkedList.size()), null);
+                    inflater.inflate(autoHeightSurfaceLayout, null);
             SurfaceView surface =(SurfaceView) (
                             mSurfaceContainer[i].findViewById(R.id.surface_view));
             mSurfaceHolders[i] = surface.getHolder();
@@ -145,7 +151,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     @Override
     protected void onStop() {
         Log.d(TAG, "Now onStop!");
-        supe.onStop();
+        super.onStop();
         playerManager.clear();
     }
 
@@ -218,6 +224,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             if (player != null) {
                 player.stopPlay();
                 player.release();
+                playerManager.delPlayer(player);
             }
         }  else if (holder == topSurfaceHolder) {
 //            Player player = playerManager.getPlayer(currentIndex);
@@ -240,14 +247,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             Log.d("TAG", "track info " + artist+":" + album + ":" + track);
         }
     };
-
-    private void fullScreenAtOtherActivity(int index) {
-        pauseAllPlayers();
-        Intent intent = new Intent();
-        intent.setClass(PlayerActivity.this, FullScreenActivity.class);
-        intent.putExtra("FULL_INDEX", index);
-        startActivity(intent);
-    }
 
     private void pauseAllPlayers() {
         List<Player> playerList = playerManager.getPlayerList();
@@ -283,7 +282,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             fullScreenFlag = true;
         }
 
-        //fullScreenAtOtherActivity(index);
     }
 
     @Override
@@ -341,7 +339,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.d(TAG, "onKeyDown: keyCode=" + keyCode + "event" + event);
+        Log.d(TAG, "onKeyDown: currentIndex=" +currentIndex);
         if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER) {
             mediaControlAgent.showController(currentIndex, true, false);
             return true;

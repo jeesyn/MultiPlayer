@@ -32,7 +32,7 @@ public class FileSelectActivity extends Activity implements  View.OnClickListene
     private Fragment currentFragment = null;
     private static final  String TAG = "FileSelectActivity";
     private static final String KEY_CHECKED_LIST = "checked_list";
-    private static final int MAX_FILE_NUM = 12;
+    private static final int MAX_FILE_NUM = 64;
     private FileBrowser fileBrowser;
     private List<String> selectedList = new ArrayList<String>();
     private ListView mFileListView;

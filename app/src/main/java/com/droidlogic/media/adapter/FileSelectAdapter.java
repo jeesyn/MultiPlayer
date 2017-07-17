@@ -74,14 +74,10 @@ public class FileSelectAdapter extends BaseAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.v(TAG,
-                        "checkBox before changed " + ((CheckBox) buttonView).isChecked());
-                if (((CheckBox) buttonView).isChecked()) {
-                    checkStatusList.set(position, true);
-                } else {
-                    checkStatusList.set(position, false);
-                }
+                        "checkBox before changed " +  buttonView.isChecked());
+                    checkStatusList.set(position, isChecked);
                 Log.v(TAG,
-                        "checkBox after changed " + ((CheckBox) buttonView).isChecked());
+                        "checkBox after changed " +  buttonView.isChecked());
                 notifyDataSetChanged();
             }
         });
