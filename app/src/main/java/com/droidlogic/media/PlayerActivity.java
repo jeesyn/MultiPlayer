@@ -21,10 +21,6 @@ import com.droidlogic.media.adapter.VideosAdapter;
 
 import java.util.List;
 
-/**
- * Created by yingwei.long on 2016/11/29.
- */
-
 public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     MediaControlAgent.ControllerCallback, View.OnClickListener {
     private static final String TAG = "PlayerActivity";
@@ -47,7 +43,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Intent intent = getIntent();
         checkedList = (List<String>)intent.getSerializableExtra(KEY_CHECKED_LIST);
         setContentView(R.layout.layout_multi_player);

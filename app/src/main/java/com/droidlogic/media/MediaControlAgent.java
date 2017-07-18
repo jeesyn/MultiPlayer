@@ -23,12 +23,6 @@ import com.droidlogic.media.view.VideoInfoView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-
-/**
- * Created by yingwei.long on 2016/12/7.
- */
-
 public class MediaControlAgent implements View.OnClickListener,
         View.OnFocusChangeListener,
         SeekBar.OnSeekBarChangeListener,
@@ -426,15 +420,15 @@ public class MediaControlAgent implements View.OnClickListener,
 
     private void seekByProgressBar(int progress) {
         int dest = progress;
-        int totaltime = getDuration();
-        int pos = totaltime * (dest + 1) / 100;
+        int totalTime = getDuration();
+        int pos = totalTime * (dest + 1) / 100;
         //check for small stream while seeking
-        int pos_check = totaltime * (dest + 1) - pos * 100;
+        int pos_check = totalTime * (dest + 1) - pos * 100;
         if (pos_check > 0) {
             pos += 1;
         }
-        if (pos >= totaltime) {
-            pos = totaltime;
+        if (pos >= totalTime) {
+            pos = totalTime;
         }
         if (dest <= 1) {
             pos = 0;
@@ -457,15 +451,15 @@ public class MediaControlAgent implements View.OnClickListener,
     }
 
     private void updateProgressBar() {
-        int curtime = getCurrentPosition();
-        int totaltime = getDuration();
-        multiMeidaController.setCurTime(secToTime (curtime / 1000));
-        multiMeidaController.setTotalTime(secToTime (totaltime / 1000));
-        if (totaltime != 0) {
-            int curtimetmp = curtime / 1000;
-            int totaltimetmp = totaltime / 1000;
-            if (totaltimetmp != 0) {
-                int step = curtimetmp*100/totaltimetmp;
+        int curTime = getCurrentPosition();
+        int totalTime = getDuration();
+        multiMeidaController.setCurTime(secToTime (curTime / 1000));
+        multiMeidaController.setTotalTime(secToTime (totalTime / 1000));
+        if (totalTime != 0) {
+            int curTimeTmp = curTime / 1000;
+            int totalTimeTmp = totalTime / 1000;
+            if (totalTimeTmp != 0) {
+                int step = curTimeTmp*100/totalTimeTmp;
                 multiMeidaController.setProgress(step);
             }
         } else {

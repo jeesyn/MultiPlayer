@@ -23,10 +23,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yingwei.long on 2016/11/29.
- */
-
 public class FileSelectActivity extends Activity implements  View.OnClickListener,
         AdapterView.OnItemClickListener, FileBrowser.SelectCallback {
     private Fragment currentFragment = null;

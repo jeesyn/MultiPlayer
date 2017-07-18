@@ -15,10 +15,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yingwei.long on 2016/12/7.
- */
-
 public class FileBrowserAdapter extends BaseAdapter {
     private static final String TAG = "FileBrowserAdapter";
     private static final String ROOT_PATH  = "/storage";

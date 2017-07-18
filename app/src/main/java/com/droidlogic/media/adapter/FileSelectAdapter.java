@@ -15,10 +15,6 @@ import com.droidlogic.media.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yingwei.long on 2016/11/28.
- */
-
 public class FileSelectAdapter extends BaseAdapter {
     private static final String TAG = "FileSelectAdapter";
     private final Context mContext;

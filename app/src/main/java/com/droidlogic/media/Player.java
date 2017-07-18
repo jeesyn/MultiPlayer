@@ -17,11 +17,6 @@ import java.io.IOException;
 
 //import com.droidlogic.app.MediaPlayer;
 
-
-/**
- * Created by yingwei.long on 2016/12/16.
- */
-
 public class Player extends Thread {
     private static final String TAG = "Player";
     private static final int MSG_CMD_INIT = 100;

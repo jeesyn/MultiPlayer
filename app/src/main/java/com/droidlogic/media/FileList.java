@@ -8,10 +8,6 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yingwei.long on 2016/12/21.
- */
-
 public class FileList {
 
     private static String TAG = "FileList";

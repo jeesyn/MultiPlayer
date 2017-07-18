@@ -19,10 +19,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-/**
- * Created by yingwei.long on 2016/12/19.
- */
-
 public class TrackInfoAdapter extends BaseAdapter {
     private static final String TAG = "TrackInfoAdapter";
     private Context mContext;

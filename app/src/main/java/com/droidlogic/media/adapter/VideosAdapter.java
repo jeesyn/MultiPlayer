@@ -13,10 +13,6 @@ import android.widget.RelativeLayout;
 
 import java.util.List;
 
-/**
- * Created by yingwei.long on 2016/12/9.
- */
-
 public class VideosAdapter extends BaseAdapter {
     private static final String TAG = "VideosAdapter";
     private Context mContext;

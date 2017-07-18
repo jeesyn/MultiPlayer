@@ -29,10 +29,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by yingwei.long on 2016/11/30.
- */
-
 public class FileBrowser extends Dialog {
     private static final String ROOT_PATH           = "/storage";
     private static final String SHEILD_EXT_STOR     = Environment.getExternalStorageDirectory().getPath() + "/external_storage";//"/storage/emulated/0/exterma;_stprage";

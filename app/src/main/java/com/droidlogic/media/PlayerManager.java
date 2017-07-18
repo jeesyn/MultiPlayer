@@ -5,10 +5,6 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yingwei.long on 2016/12/16.
- */
-
 public class PlayerManager {
     static private PlayerManager mInstance = null;
     private List<Player> playerList;
@@ -70,8 +66,6 @@ public class PlayerManager {
         for (int i = 0; i <  playerList.size(); i++) {
             getPlayer(i).interrupt();
             getPlayer(i).release();
-//            getPlayer(i).join();
-
         }
         playerList.clear();
     }
